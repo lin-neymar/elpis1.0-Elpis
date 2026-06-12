@@ -28,7 +28,7 @@ module.exports = {
     /* 把options挂载到Koa对象上 (应用配置)*/
     app.options = options;
 
-    // 基础路径
+    // 基础路径，   process.cwd(): Node.js 内置方法，返回当前进程的工作目录（绝对路径）
     app.baseDir = process.cwd();
 
     // 业务文件路径                               相当于./app（为了兼容）
