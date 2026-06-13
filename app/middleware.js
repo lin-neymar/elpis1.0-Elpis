@@ -1,9 +1,12 @@
 const path = require('path');
 
 module.exports = (app) => {
+  // 配置静态根目录
+  const koaStatic = require('koa-static');
+  app.use(koaStatic(path.resolve(process.cwd(), './app/public')));
+
   // 模板渲染引擎(模板引擎就是基于模板配合数据构造出字符串输出的一个组件)
   const koaNunjucks = require('koa-nunjucks-2');
-
   // 使用
   app.use(
     koaNunjucks({
