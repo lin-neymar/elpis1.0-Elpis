@@ -1,5 +1,10 @@
 const path = require('path');
 
+/*
+app/middleware.js 是 项目级「全局中间件注册入口」：在框架启动时，把静态资源、模板渲染、body 解析等 整站都要用的 Koa 中间件 挂到 app 上。
+放在 app/ 根目录，是因为 elpis-core 约定并写死了这个路径，作为业务方配置全局中间件的固定入口
+*/
+
 module.exports = (app) => {
   // 配置静态根目录
   const koaStatic = require('koa-static');
@@ -27,6 +32,10 @@ module.exports = (app) => {
       enableTypes: ['form', 'json', 'text'],
     }),
   );
+
+  // 除了官方的，在所有业务中间件中需要最早引用这个error-handle
+  // 引入异常捕获中间件
+  app.use(app.middlewares.errorHandler);
 };
 
 /*

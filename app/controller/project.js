@@ -8,8 +8,6 @@ module.exports = (app) => {
      * @param {object} ctx 上下文
      */
     async getList(ctx) {
-      console.log(ctx.request.body);
-
       const { project: projectService } = app.service;
       const projectList = await projectService.getList();
       //   ctx.status = 200;

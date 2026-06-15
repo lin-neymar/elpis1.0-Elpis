@@ -18,10 +18,10 @@
 // }
 
 // 更换启动方式，引入elpis-core
-const ElpisCore = require("./elpis-core");
+const ElpisCore = require('./elpis-core');
 
 // 启动项目
 ElpisCore.start({
-  name: "Elpis",
-  homePage: "/view/page1",
+  name: 'Elpis',
+  homePage: '/view/page1',
 });

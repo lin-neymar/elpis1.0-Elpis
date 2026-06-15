@@ -3,8 +3,6 @@ module.exports = (app) => {
   return class projectService extends BaseService {
     async getList() {
       // 这里则可以打印
-      console.log('222', this.curl);
-
       return [
         {
           name: 'project1',

@@ -35,7 +35,7 @@ module.exports = (app) => {
     let name = path.resolve(file);
 
     // 截取路径 app/middlewares/custom-module/custom-middleware.js ==>custom-module/custom-middleware
-    name = name.substring(name.lastIndexOf(`middlewares${sep}`) + `middlewares${sep}`.length, name.lastIndexOf('.'));
+    name = name.substring(name.lastIndexOf(`middleware${sep}`) + `middleware${sep}`.length, name.lastIndexOf('.'));
 
     // 把‘-’统一改为驼峰式，custom-module/custom-middleware.js ==> customModule.customMiddleware
     name = name.replace(/[_-][a-z]/gi, (s) => s.substring(1).toUpperCase());
