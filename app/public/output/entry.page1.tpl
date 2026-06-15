@@ -22,8 +22,15 @@
     }
 
     const handleClick=()=>{
-        axios.get('/api/project/list').then((res)=>{
-            console.log(res)
+        // axios.get('/api/project/list').then((res)=>{
+        //    console.log(res)
+        // })
+
+        // 采用post来测试
+        axios.request({
+            method:'post',
+            url:'/api/project/list',
+            data:{a:1, b:2, c:3}
         })
     }
 </script>

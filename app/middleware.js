@@ -18,6 +18,15 @@ module.exports = (app) => {
       },
     }),
   );
+
+  // 引入 ctx.body 解析中间件
+  const bodyParser = require('koa-bodyparser');
+  app.use(
+    bodyParser({
+      formList: '1000mb',
+      enableTypes: ['form', 'json', 'text'],
+    }),
+  );
 };
 
 /*
