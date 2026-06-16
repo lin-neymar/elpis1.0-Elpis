@@ -36,6 +36,9 @@ module.exports = (app) => {
   // 除了官方的，在所有业务中间件中需要最早引用这个error-handle
   // 引入异常捕获中间件
   app.use(app.middlewares.errorHandler);
+
+  // 签名合法性校验
+  app.use(app.middlewares.apiSignVerify);
 };
 
 /*
