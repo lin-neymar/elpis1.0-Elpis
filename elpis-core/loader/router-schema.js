@@ -10,7 +10,7 @@ const { sep } = path;
 * 文件存放形式：app/router-schema/**.js
 
     输出：
-    app.rouSchema={
+    app.routerSchema={
         `${api1}`:${jsonSchema},
         `${api2}`:${jsonSchema},
         `${api3}`:${jsonSchema},

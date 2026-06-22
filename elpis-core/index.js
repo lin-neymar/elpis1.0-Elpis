@@ -4,13 +4,13 @@ const { sep } = path; //兼容不同操作系统上的斜杠
 
 const env = require('./env');
 
+const configLoader = require('./loader/config');
+const extendLoader = require('./loader/extend');
 const middlewareLoader = require('./loader/middleware');
 const routerSchemaLoader = require('./loader/router-schema');
 const routerLoader = require('./loader/router');
 const controllerLoader = require('./loader/controller');
 const serviceLoader = require('./loader/service');
-const configLoader = require('./loader/config');
-const extendLoader = require('./loader/extend');
 
 module.exports = {
   /*
@@ -37,6 +37,15 @@ module.exports = {
     // 将识别环境的js挂载到app上
     app.env = env();
 
+    // 加载 config
+    configLoader(app);
+    console.log('[config] loaded:', app.config);
+    console.log(`-- [start] load config done --`);
+
+    // 加载 extend
+    extendLoader(app);
+    console.log(`-- [start] load extend done --`);
+
     // 加载 middleware
     middlewareLoader(app);
     console.log(`-- [start] load middleware done --`);
@@ -45,23 +54,13 @@ module.exports = {
     routerSchemaLoader(app);
     console.log(`-- [start] load routerSchema done --`);
 
-    // 加载 controller
-    controllerLoader(app);
-    console.log(`-- [start] load controller done --`);
-
     // 加载 service
     serviceLoader(app);
     console.log(`-- [start] load service done --`);
 
-    // 加载 config
-    configLoader(app);
-    console.log(app.config);
-
-    console.log(`-- [start] load config done --`);
-
-    // 加载 extend
-    extendLoader(app);
-    console.log(`-- [start] load extend done --`);
+    // 加载 controller
+    controllerLoader(app);
+    console.log(`-- [start] load controller done --`);
 
     // 注册全局中间件（默认用户引入的middleware.js是在app/middleware.js）
     try {

@@ -31,7 +31,7 @@ module.exports = (app) => {
   // 遍历所有文件目录，把内容加载到 app.middlewares 下
   const middlewares = {};
   fileList.forEach((file) => {
-    // 提取文件名称
+    // 提取文件的绝对路径
     let name = path.resolve(file);
 
     // 截取路径 app/middlewares/custom-module/custom-middleware.js ==>custom-module/custom-middleware

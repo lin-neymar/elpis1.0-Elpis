@@ -10,38 +10,55 @@ const { sep } = path;
  * 目录下对应的 config 配置 (config目录是放在根目录下)
  * 默认配置 config/config.default.js
  * 本地配置 config/config.local.js
- * 测试配置 config/config.deta.js
- * 生产配置 config/config.prod.js
+ * 测试配置 config/config.beta.js
+ * 生产配置 config/config.production.js
  */
+function loadConfigFile(filePath, options = {}) {
+  const { required = false, label = 'config' } = options;
+
+  try {
+    return require(filePath);
+  } catch (e) {
+    if (e.code === 'MODULE_NOT_FOUND') {
+      if (required) {
+        console.error(`[config] 缺少必填配置: ${filePath}`);
+        throw e;
+      }
+      console.warn(`[config] 未找到 ${label}，跳过: ${filePath}`);
+      return {};
+    }
+
+    console.error(`[config] 加载失败 ${label}: ${filePath}`);
+    console.error(e);
+    throw e;
+  }
+}
+
 module.exports = (app) => {
-  // 找到 config/ 目录
   const configPath = path.resolve(app.baseDir, `.${sep}config`);
 
-  // 获取 default.config
-  let defaultConfig = {};
-  try {
-    defaultConfig = require(path.resolve(configPath, `.${sep}config.default.js`));
-  } catch (e) {
-    console.log('[exception] there is no default.config file');
-  }
+  const defaultConfig = loadConfigFile(
+    path.resolve(configPath, `.${sep}config.default.js`),
+    { required: true, label: 'config.default.js' },
+  );
 
-  // 获取 env.config
   let envConfig = {};
-  try {
-    if (app.env.isLocal()) {
-      // 本地环境
-      envConfig = require(path.resolve(configPath, `.${sep}config.local.js`));
-    } else if (app.env.isBeta()) {
-      // 测试环境
-      envConfig = require(path.resolve(configPath, `.${sep}config.beta.js`));
-    } else if (app.env.isProduction()) {
-      // 生产环境
-      envConfig = require(path.resolve(configPath, `.${sep}config.production.js`));
-    }
-  } catch (e) {
-    console.log('[exception] there is no env.config file');
+  let envFile = '';
+
+  if (app.env.isLocal()) {
+    envFile = 'config.local.js';
+  } else if (app.env.isBeta()) {
+    envFile = 'config.beta.js';
+  } else if (app.env.isProduction()) {
+    envFile = 'config.production.js';
   }
 
-  // 覆盖并加载 config 配置
+  if (envFile) {
+    envConfig = loadConfigFile(
+      path.resolve(configPath, `.${sep}${envFile}`),
+      { required: false, label: envFile },
+    );
+  }
+
   app.config = Object.assign({}, defaultConfig, envConfig);
 };

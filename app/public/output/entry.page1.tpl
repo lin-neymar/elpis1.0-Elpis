@@ -22,7 +22,7 @@
         console.log(e)
     }
 
-    const handleClick=()=>{
+    function handleClick(){
         const signKey = 'hsdfs73jsds629hsds8vwwgwg8qi9'
         const st = Date.now()
         axios.request({
