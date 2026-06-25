@@ -6,8 +6,10 @@
 
 <script setup>
 import { ref } from 'vue';
+import utils from '$common/utils';
 const content = ref('');
 console.log('page2 init');
+console.log(utils);
 </script>
 
 <style lang="less" scoped>

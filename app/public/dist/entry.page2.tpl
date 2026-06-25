@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset="utf-8"><link href="/static/normalize.css" rel="stylesheet"/><link href="/static/logo.jpg" rel="icon" type="image/x-icon"/><title>{{name}}</title><script defer="defer" src="/dist/prod/js/entry.page2_6578d2bc.bundle.js"></script></head><body style="margin: 0;"><div id="root"></div><input id="env" value="{{env}}"><input id="options" value="{{options}}"></body><script>try{
+<!doctype html><html><head><meta charset="utf-8"><link href="/static/normalize.css" rel="stylesheet"/><link href="/static/logo.jpg" rel="icon" type="image/x-icon"/><title>{{name}}</title><script defer="defer" src="/dist/prod/js/vendor_74abc706.bundle.js"></script><script defer="defer" src="/dist/prod/js/common_a7f4f15c.bundle.js"></script><script defer="defer" src="/dist/prod/js/entry.page2_25a38273.bundle.js"></script></head><body style="margin: 0;"><div id="root"></div><input id="env" value="{{env}}"><input id="options" value="{{options}}"></body><script>try{
         window.env=document.getElementById('env').value
         const options=document.getElementById('options').value
         window.options=JSON.parse(options)
