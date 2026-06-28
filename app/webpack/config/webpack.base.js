@@ -82,13 +82,8 @@ module.exports = {
       },
     ],
   },
-  // 3.产物输出路径（打包后的文件输出到哪里）
-  output: {
-    filename: 'js/[name]_[chunkhash:8].bundle.js', // 输出文件名
-    path: path.join(process.cwd(), './app/public/dist/prod'), // 输出路径
-    publicPath: '/dist/prod', // 公共路径
-    crossOriginLoading: 'anonymous', // 跨域加载
-  },
+  // 3.产物输出路径（打包后的文件输出到哪里），因为开发和生产环境输出不一致，所以在各自环境中自行配置
+  output: {},
   // 4.配置模块解析的具体行为（定义 webpack 在打包时，如何找到并解析具体模块的路径）
   resolve: {
     extensions: ['.js', '.vue', '.less', '.css'], // 扩展名
@@ -160,5 +155,8 @@ module.exports = {
         },
       },
     },
+
+    // 将 webpack 运行时生成的代码打包到 runtime.js文件中
+    runtimeChunk: true,
   },
 };
