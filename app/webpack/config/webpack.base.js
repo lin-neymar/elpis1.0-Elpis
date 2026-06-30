@@ -102,13 +102,15 @@ module.exports = {
     new VueLoaderPlugin(),
     // 把第三方库暴露到 window.context 下
     new webpack.ProvidePlugin({
-      Vue: 'vue',
+      Vue: 'vue', // 使用 vue 的 Vue 符号
+      axios: 'axios', // 使用 axios 的 axios 符号
+      _: 'lodash', // 使用 lodash 的 _ 符号
     }),
     // 定义全局常量
     new webpack.DefinePlugin({
-      _VUE_OPTIONS_API_: 'true', // 支持 vue 解析 optionApi
-      _VUE_PROD_DEVTOOLS_: 'false', // 禁用 Vue 调试工具
-      _VUE_PROD_HYDRATION_MISMATCH_DETAILS_: 'false', // 禁用生产环境显示 “水合” 信息
+      __VUE_OPTIONS_API__: 'true', // 支持 vue 解析 optionApi
+      __VUE_PROD_DEVTOOLS__: 'false', // 禁用 Vue 调试工具
+      __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: 'false', // 禁用生产环境显示 “水合” 信息
     }),
     // 构造最终渲染的页面模板 page1
     // new HtmlWebpackPlugin({
