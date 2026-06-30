@@ -5,7 +5,7 @@
     <link href="/static/normalize.css" rel="stylesheet" />
     <link href="/static/logo.jpg" rel="icon" type="image/x-icon" />
     <title>{{name}}</title>
-<script defer src="http://127.0.0.1:9002/public/dist/dev/js/runtime~entry.page2_d5087e21.bundle.js"></script><script defer src="http://127.0.0.1:9002/public/dist/dev/js/vendor_f1682872.bundle.js"></script><script defer src="http://127.0.0.1:9002/public/dist/dev/js/common_79d7efce.bundle.js"></script><script defer src="http://127.0.0.1:9002/public/dist/dev/js/entry.page2_371e6ba2.bundle.js"></script></head>
+<script defer src="http://127.0.0.1:9002/public/dist/dev/js/runtime~entry.page2_f3b26759.bundle.js"></script><script defer src="http://127.0.0.1:9002/public/dist/dev/js/vendor_aa576a1a.bundle.js"></script><script defer src="http://127.0.0.1:9002/public/dist/dev/js/common_e3057aee.bundle.js"></script><script defer src="http://127.0.0.1:9002/public/dist/dev/js/entry.page2_3ee5f671.bundle.js"></script></head>
 <body style="margin: 0;">
     <div id="root"></div>
     <input id="env" value="{{env}}"></input>

@@ -1,6 +1,6 @@
 <template>
   <h1>page1</h1>
-  <input v-model="content" />
+  <el-input v-model="content" style="width: 150px"></el-input>
   <div>{{ content }}</div>
   <div>{{ content1 }}</div>
 </template>
