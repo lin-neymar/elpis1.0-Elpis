@@ -8,7 +8,9 @@
     "lint": "eslint --quiet --ext js,vue .",
     "dev": "_ENV='local' nodemon ./index.js",
     "beta": "_ENV='beta' nodemon ./index.js",
-    "prod": "_ENV='production' nodemon ./index.js"
+    "prod": "_ENV='production' nodemon ./index.js",
+    "build:dev": "node --max_old_space_size=4096 ./app/webpack/dev.js",
+    "build:prod": "node ./app/webpack/prod.js"
   },
   "repository": {
     "type": "git",
