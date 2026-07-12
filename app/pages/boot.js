@@ -3,6 +3,7 @@ import { createApp } from 'vue';
 // 引入 elementUI
 import ElementUI from 'element-plus';
 import 'element-plus/theme-chalk/index.css';
+import 'element-plus/theme-chalk/dark/css-vars.css';
 
 // 引入公共样式
 import './asserts/custom.css';

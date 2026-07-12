@@ -4,22 +4,37 @@ module.exports = (app) => {
   // 这里返回的是一个类，所以需要用 extends 继承
   return class ProjectController extends BaseController {
     /*
-     * 获取项目列表
-     * @param {object} ctx 上下文
+     * 获取所有模型与项目的结构化数据
      */
-    async getList(ctx) {
+    async getModelList(ctx) {
       const { project: projectService } = app.service;
-      const projectList = await projectService.getList();
-      //   ctx.status = 200;
-      //   ctx.body = {
-      //     success: true,
-      //     data: res,
-      //     // 在使用egg的框架时，像之前做的网盘项目，在controller这里就返回data出去了，不在调用service
-      //     metadata: {},
-      //   };
+      const modelList = await projectService.getModelList();
 
-      // 改造成
-      this.success(ctx, projectList);
+      // 构造返回结果，只返回关键数据，为了保证一定的安全性，只暴露应该看到的数据
+      const dtoModelList = modelList.reduce((preList, item) => {
+        const { model, project } = item;
+
+        // 构造 model 关键数据
+        const { key, name, desc } = model;
+        const dtoModel = { key, name, desc };
+
+        // 构造 project 关键数据
+        const dtoProject = {};
+        for (const projKey in project) {
+          const { key, name, desc, homePage } = project[projKey];
+          dtoProject[projKey] = { key, name, desc, homePage };
+        }
+
+        // 整合返回结构
+        preList.push({
+          model: dtoModel,
+          project: dtoProject,
+        });
+
+        return preList;
+      }, []);
+
+      this.success(ctx, dtoModelList);
     }
   };
 };

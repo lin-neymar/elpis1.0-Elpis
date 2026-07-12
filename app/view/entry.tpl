@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="dark">
 <head>
     <meta charset="utf-8">
     <link href="/static/normalize.css" rel="stylesheet" />
@@ -8,8 +8,6 @@
 </head>
 <body style="margin: 0;">
     <div id="root"></div>
-    <input id="env" value="{{env}}"></input>
-    <input id="options" value="{{options}}"></input>
 </body>
 <script type="text/javascript">
     try{
