@@ -10,12 +10,64 @@ const st = Date.now();
 describe('测试 project 相关接口', function () {
   this.timeout(60000);
 
+  let modelList;
+  const projectList = [];
   let request;
 
   // it 一个具体测试场景
   it('启动服务', async () => {
     const app = await elpisCore.start();
+    modelList = require('../../model/index')(app);
+    modelList.forEach((modelItem) => {
+      const { project } = modelItem;
+      for (const pKey in project) {
+        projectList.push(project[pKey]);
+      }
+    });
     request = supertest(app.listen());
+  });
+
+  it('GET /api/project/list without proj_key', async () => {
+    let tmpRequest = request.get('/api/project/list');
+    tmpRequest = tmpRequest.set('s_t', st);
+    tmpRequest = tmpRequest.set('s_sign', md5(`${signKey}_${st}`));
+    const res = await tmpRequest;
+    assert(res.body.success === true);
+
+    const resData = res.body.data;
+    assert(resData.length === projectList.length);
+    for (let i = 0; i < resData.length; ++i) {
+      const item = resData[i];
+      assert(item.modelKey);
+      assert(item.key);
+      assert(item.name);
+      assert(item.desc !== undefined);
+      assert(item.homePage !== undefined);
+    }
+  });
+
+  it('GET /api/project/list with proj_key', async () => {
+    const projKey = projectList[Math.floor(Math.random() * projectList.length)].key;
+    const { modelKey } = projectList.find((item) => item.key === projKey);
+    let tmpRequest = request.get('/api/project/list');
+    tmpRequest = tmpRequest.set('s_t', st);
+    tmpRequest = tmpRequest.set('s_sign', md5(`${signKey}_${st}`));
+    tmpRequest = tmpRequest.query({
+      proj_key: projKey,
+    });
+    const res = await tmpRequest;
+    assert(res.body.success === true);
+
+    const resData = res.body.data;
+    assert(projectList.filter((item) => item.modelKey === modelKey).length === resData.length);
+    for (let i = 0; i < resData.length; ++i) {
+      const item = resData[i];
+      assert(item.modelKey);
+      assert(item.key);
+      assert(item.name);
+      assert(item.desc !== undefined);
+      assert(item.homePage !== undefined);
+    }
   });
 
   it('GET /api/project/model_list', async () => {
