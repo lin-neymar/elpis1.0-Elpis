@@ -12,8 +12,8 @@ module.exports = {
       name: '用户管理（B站）',
     },
     {
-      key: 'kecheng',
-      name: '课程管理',
+      key: 'resource',
+      name: '课程资料',
       menuType: 'module',
       moduleType: 'sider',
       siderConfig: {

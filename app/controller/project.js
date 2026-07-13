@@ -38,7 +38,7 @@ module.exports = (app) => {
     }
 
     /*
-     * 获取当前 projectKey 对应模型下的项目列表（如果无 projKey ，全量获取）
+     * 获取当前 projKey 对应模型下的项目列表（如果无 projKey ，全量获取）
      */
     async getProjectList(ctx) {
       const { proj_key: projKey } = ctx.request.query;
@@ -52,6 +52,22 @@ module.exports = (app) => {
       });
 
       this.success(ctx, dtoProjectList);
+    }
+
+    /*
+     * 根据 projKey 获取项目配置
+     */
+    async getProjectConfig(ctx) {
+      const { proj_key: projKey } = ctx.request.query;
+      const { project: projectService } = app.service;
+      const projConfig = await projectService.getProjectConfig(projKey);
+
+      if (!projConfig) {
+        this.fail(ctx, '获取项目配置异常', 50000);
+        return;
+      }
+
+      this.success(ctx, projConfig);
     }
   };
 };

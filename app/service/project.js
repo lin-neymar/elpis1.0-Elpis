@@ -25,5 +25,18 @@ module.exports = (app) => {
         return preList;
       }, []);
     }
+
+    /*
+     * 根据 projKey 获取项目配置
+     */
+    async getProjectConfig(projKey) {
+      let projConfig;
+      modelList.forEach((modelItem) => {
+        if (modelItem.project[projKey]) {
+          projConfig = modelItem.project[projKey];
+        }
+      });
+      return projConfig;
+    }
   };
 };
