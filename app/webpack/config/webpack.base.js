@@ -149,6 +149,7 @@ module.exports = {
         },
         // 公共模块
         common: {
+          test: /[\\/]common|widgets[\\/]/,
           name: 'common', // 模块名称
           minChunks: 2, // 被两处引用即被归为公共模块
           minSize: 1, // 最小分割文件大小 （因课程需要设置为 1 byte）

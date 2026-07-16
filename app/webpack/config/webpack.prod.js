@@ -34,8 +34,8 @@ const webpackConfig = merge.smart(baseConfig, {
   // 生产环境的 output 配置
   output: {
     filename: 'js/[name]_[chunkhash:8].bundle.js', // 输出文件名
-    path: path.join(process.cwd(), './app/public/dist/prod'), // 输出路径
-    publicPath: '/dist/prod', // 公共路径
+    path: path.join(process.cwd(), './app/public/dist/prod/'), // 输出路径
+    publicPath: '/dist/prod/', // 公共路径
     crossOriginLoading: 'anonymous', // 跨域加载
   },
   module: {
@@ -110,7 +110,7 @@ const webpackConfig = merge.smart(baseConfig, {
     minimize: true,
     minimizer: [
       new TerserWebpackPlugin({
-        cache: true, // 启用缓存来加速构建过程
+        // cache: true, // 启用缓存来加速构建过程 新版本不用开启这个 cache 选项已移除（Webpack 5 自己做缓存）
         parallel: true, // 利用多核 cpu 的优势来加快压缩速度
         terserOptions: {
           compress: {
