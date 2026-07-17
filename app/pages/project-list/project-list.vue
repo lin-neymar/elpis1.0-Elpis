@@ -54,7 +54,6 @@ async function getModelList() {
     return;
   }
   modelList.value = res.data;
-  console.log(modelList.value);
 }
 
 const onEnter = (projItem) => {

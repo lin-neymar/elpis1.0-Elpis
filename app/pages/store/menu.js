@@ -29,16 +29,30 @@ export const useMenuStore = defineStore('menu', () => {
         if (mItem) return mItem;
       }
 
-      if (moduleType === 'sider' && menuItem.sideConfig && menuItem.sideConfig.menu) {
-        const mItem = findMenuItem({ key, value }, menuItem.sideConfig.menu);
+      if (moduleType === 'sider' && menuItem.siderConfig && menuItem.siderConfig.menu) {
+        const mItem = findMenuItem({ key, value }, menuItem.siderConfig.menu);
         if (mItem) return mItem;
       }
     }
+  };
+
+  /*
+   * 找出第一个菜单目录
+   * @param mList 菜单列表
+   */
+  const findFirstMenuItem = (mList = menuList.value) => {
+    if (!mList || !mList[0]) return;
+    let firstMenuItem = mList[0];
+    if (firstMenuItem.subMenu) {
+      firstMenuItem = findFirstMenuItem(firstMenuItem.subMenu);
+    }
+    return firstMenuItem;
   };
 
   return {
     menuList,
     setMenuList,
     findMenuItem,
+    findFirstMenuItem,
   };
 });

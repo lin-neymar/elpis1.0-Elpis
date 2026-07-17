@@ -97,4 +97,7 @@ const handleUserCommand = (event) => {
 :deep(.el-header) {
   padding: 0;
 }
+:deep(.el-main) {
+  padding: 0;
+}
 </style>
