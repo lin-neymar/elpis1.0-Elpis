@@ -1,5 +1,5 @@
 <template>
-  <headerContainer :title="projectName">
+  <header-container :title="projectName">
     <template #menu-content>
       <!-- 根据 menuStore.menuList 渲染 -->
       <el-menu
@@ -39,13 +39,13 @@
     <template #main-content>
       <slot name="main-content"></slot>
     </template>
-  </headerContainer>
+  </header-container>
 </template>
 <script setup>
 import { ref, watch, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { ArrowDown } from '@element-plus/icons-vue';
-import headerContainer from '$widgets/header-container/header-container.vue';
+import HeaderContainer from '$widgets/header-container/header-container.vue';
 import SubMenu from './complex-view/sub-menu/sub-menu.vue';
 import { useMenuStore } from '$store/menu.js';
 import { useProjectStore } from '$store/project.js';
