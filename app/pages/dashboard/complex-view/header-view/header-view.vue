@@ -100,9 +100,9 @@ const onMenuSelect = (menuKey) => {
 const handleProjectCommand = (event) => {
   const projectItem = projectStore.projectList.find((item) => item.key === event);
   if (!projectItem || !projectItem.homePage) return; // 如果项目不存在或没有首页，则返回
-  const { origin, pathname } = window.location; // 获取当前页面的 origin 和 pathname
-  window.location.replace(`${origin}${pathname}#${projectItem.homePage}`);
-  window.location.reload(); // 刷新页面
+  const { origin } = window.location; // 获取当前页面的 origin
+  window.location.replace(`${origin}/view/dashboard${projectItem.homePage}`);
+  // window.location.reload(); // 刷新页面
 };
 </script>
 <!-- 不用 scoped：slot 穿透后 ::deep 选择器无法命中 el-menu，导致覆盖失效 -->

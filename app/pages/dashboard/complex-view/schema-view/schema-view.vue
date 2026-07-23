@@ -5,14 +5,17 @@
   </el-row>
 </template>
 <script setup>
+import { provide } from 'vue';
 import SearchPanel from './complex-view/search-panel/search-panel.vue';
 import TablePanel from './complex-view/table-panel/table-panel.vue';
 import { useSchema } from './hook/schema.js';
 
-const { api } = useSchema();
-console.log(api.value);
-setTimeout(() => {
-  console.log(api.value);
+const { api, tableSchema, tableConfig } = useSchema();
+
+provide('schemaViewData', {
+  api,
+  tableSchema,
+  tableConfig,
 });
 </script>
 <style lang="less" scoped>
