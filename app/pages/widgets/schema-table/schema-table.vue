@@ -61,6 +61,8 @@ const props = defineProps({
   //   },
   schema: Object,
   api: String, // 表格数据源api
+
+  apiParams: Object, // api 请求参数，请求 api 时携带
   // buttons 操作按钮相关配置，结构如下：
   //   [{
   //     label: '', // 按钮中文名
@@ -73,7 +75,7 @@ const props = defineProps({
 
 // toRefs(props) = 安全地解构 props；需要单独拿 api/schema/buttons 去做 watch、请求时再用，避免直接解构把响应式弄丢
 // 或者使用时采用props.api这种形式，也能保持响应式，但是写起来麻烦，后续需要多次使用到
-const { api, schema, buttons } = toRefs(props);
+const { api, schema, buttons, apiParams } = toRefs(props);
 
 const operationWidth = computed(() => {
   return buttons?.value?.length > 0
@@ -96,7 +98,7 @@ onMounted(() => {
 watch(
   // 这里的 schema、api 已经是 ref，可以直接交给 watch
   // Vue 的 watch 支持直接听 ref / reactive / getter / 数组
-  [schema, api],
+  [schema, api, apiParams],
   () => {
     initData();
   },
@@ -130,6 +132,7 @@ const fetchTableData = async () => {
     method: 'get',
     url: `${api.value}/list`,
     query: {
+      ...apiParams.value,
       page: currentPage.value,
       size: pageSize.value,
     },

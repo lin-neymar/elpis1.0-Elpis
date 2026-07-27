@@ -9,8 +9,10 @@ export const useSchema = () => {
   const api = ref('');
   const tableSchema = ref({});
   const tableConfig = ref({});
+  const searchSchema = ref({});
+  const searchConfig = ref({});
 
-  // 构造 schemaConfig 相关配置，输送给 schemaView 解析
+  // 构建数据
   const buildData = () => {
     const { key, sider_key: siderKey } = route.query;
 
@@ -26,10 +28,21 @@ export const useSchema = () => {
       api.value = sConfig.api ?? '';
       tableSchema.value = {};
       tableConfig.value = undefined;
+      searchSchema.value = {};
+      searchConfig.value = undefined;
       nextTick(() => {
-        // configSchema里面可能后续会有不止tableOption, 很多别的option，为了低耦合，需要对应处理
+        // 构造 tableSchema 和 tableConfig
         tableSchema.value = buildDtoSchema(configSchema, 'table');
         tableConfig.value = sConfig.tableConfig;
+        // 构造 searchSchema 和 searchConfig
+        const dtoSearchSchema = buildDtoSchema(configSchema, 'search');
+        for (const key in dtoSearchSchema.properties) {
+          if (route.query[key] !== undefined) {
+            dtoSearchSchema.properties[key].option.default = route.query[key];
+          }
+        }
+        searchSchema.value = dtoSearchSchema;
+        searchConfig.value = sConfig.searchConfig;
       });
       /*
        * 这里为什么要先清空再nextTick赋值?
@@ -84,5 +97,7 @@ export const useSchema = () => {
     api,
     tableSchema,
     tableConfig,
+    searchSchema,
+    searchConfig,
   };
 };

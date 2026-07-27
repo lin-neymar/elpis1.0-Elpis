@@ -35,6 +35,27 @@ module.exports = (app) => {
       );
     }
 
+    getProductEnumList(ctx) {
+      this.success(ctx, [
+        {
+          label: `${ctx.projKey}全部`,
+          value: `${ctx.projKey}全部`,
+        },
+        {
+          label: `${ctx.projKey}测试1`,
+          value: `${ctx.projKey}测试1`,
+        },
+        {
+          label: `${ctx.projKey}测试2`,
+          value: `${ctx.projKey}测试2`,
+        },
+        {
+          label: `${ctx.projKey}测试3`,
+          value: `${ctx.projKey}测试3`,
+        },
+      ]);
+    }
+
     deleteProduct(ctx) {
       const { product_id: productId } = ctx.request.body;
       this.success(ctx, {
