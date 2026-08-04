@@ -1,5 +1,5 @@
 <template>
-  <headerContainer :title="projectName">
+  <header-container :title="projectName">
     <template #menu-content>
       <!-- 根据 menuStore.menuList 渲染 -->
       <el-menu
@@ -39,13 +39,13 @@
     <template #main-content>
       <slot name="main-content"></slot>
     </template>
-  </headerContainer>
+  </header-container>
 </template>
 <script setup>
 import { ref, watch, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { ArrowDown } from '@element-plus/icons-vue';
-import headerContainer from '$widgets/header-container/header-container.vue';
+import HeaderContainer from '$widgets/header-container/header-container.vue';
 import SubMenu from './complex-view/sub-menu/sub-menu.vue';
 import { useMenuStore } from '$store/menu.js';
 import { useProjectStore } from '$store/project.js';
@@ -100,9 +100,9 @@ const onMenuSelect = (menuKey) => {
 const handleProjectCommand = (event) => {
   const projectItem = projectStore.projectList.find((item) => item.key === event);
   if (!projectItem || !projectItem.homePage) return; // 如果项目不存在或没有首页，则返回
-  const { origin, pathname } = window.location; // 获取当前页面的 origin 和 pathname
-  window.location.replace(`${origin}${pathname}#${projectItem.homePage}`);
-  window.location.reload(); // 刷新页面
+  const { origin } = window.location; // 获取当前页面的 origin
+  window.location.replace(`${origin}/view/dashboard${projectItem.homePage}`);
+  // window.location.reload(); // 刷新页面
 };
 </script>
 <!-- 不用 scoped：slot 穿透后 ::deep 选择器无法命中 el-menu，导致覆盖失效 -->

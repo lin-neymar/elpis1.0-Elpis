@@ -12,7 +12,7 @@ import './asserts/custom.css';
 import pinia from '$store';
 
 // 引入 vue-router
-import { createRouter, createWebHashHistory } from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
 
 /*
  * vue 页面主入口，用于启动vue
@@ -39,7 +39,7 @@ export default (pageComponent, { routes, libs } = {}) => {
   // 页面路由
   if (routes && routes.length) {
     const router = createRouter({
-      history: createWebHashHistory(), // 采用 hash 模式
+      history: createWebHistory(), // 采用 history 模式
       routes,
     });
     app.use(router);

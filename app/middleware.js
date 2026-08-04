@@ -34,14 +34,19 @@ module.exports = (app) => {
   );
 
   // 除了官方的，在所有业务中间件中需要最早引用这个error-handle
-  // 引入异常捕获中间件
+  // 洋葱圈模型完整的顺序：static → nunjucks → bodyParser → 1️⃣ → 2️⃣ → 3️⃣ → 4️⃣ → router → …… → 4️⃣ → 3️⃣ → 2️⃣ → 1️⃣ → bodyParser → nunjucks → static
+  // controller、service 不是中间件环，只在最内层执行一次，中间件才双向经过。
+  // 引入异常捕获中间件1️⃣
   app.use(app.middlewares.errorHandler);
 
-  // 引入签名合法性校验
+  // 引入签名合法性校验2️⃣
   app.use(app.middlewares.apiSignVerify);
 
-  // 引入 API 参数校验
+  // 引入 API 参数校验3️⃣
   app.use(app.middlewares.apiParamsVerify);
+
+  // 引入 项目处理 中间件4️⃣
+  app.use(app.middlewares.projectHandler);
 };
 
 /*

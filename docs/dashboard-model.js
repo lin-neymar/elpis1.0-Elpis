@@ -51,10 +51,52 @@
               ...schema, // 标准 schema 配置
               type: '', // 字段类型
               label: '', // 字段的中文名
+              // 字段在 table 中的相关配置
+              tableOption: {
+                ...elTableColumnConfig, // 标准 el-table-column 配置
+                toFixed: 0, // 保留小数点后几位
+                visiable: true, // 默认为 true (false时，表示不在表单中显示)
+              },
+              // 字段在 search-bar 中的相关配置
+              searchOption: {
+                ...elComponentConfig, // 标准 el-component-column 配置
+                comType: '', // 配置组件类型 input/select/...
+                default: '', // 默认值
+
+                // comType === 'select'
+                enumList: [], // 下拉框可选项
+
+                // comType === dynamicSelect
+                api: '',
+              },
             },
           },
         },
-        tableConfig: {}, // table 相关配置
+        tableConfig: {
+          headerButtons: [
+            {
+              label: '', // 按钮中文名
+              eventKey: '', // 按钮事件名
+              eventOption: {}, // 按钮事件具体配置
+              ...elButtonConfig, // 标准的 el-button 配置
+            },
+          ], // 列表头部操作按钮
+          rowButtons: [
+            {
+              label: '', // 按钮中文名
+              eventKey: '', // 按钮事件名
+              eventOption: {
+                // 当eventKey === 'remove'
+                params: {
+                  // paramKey = 参数的键值
+                  // rowValueKey = 参数值 （格式为 schema:tableKey，到table中找相应的字段）
+                  paramKey: rowValueKey,
+                },
+              }, // 按钮事件具体配置
+              ...elButtonConfig, // 标准的 el-button 配置
+            },
+          ], // 列表行操作按钮
+        }, // table 相关配置
         searchConfig: {}, // search-bar 相关配置
         components: {}, // 模块组件
       },
