@@ -85,6 +85,7 @@
               },
             },
           },
+          required: [], // 标记哪些字段是必填项
         },
         // table 相关配置
         tableConfig: {
