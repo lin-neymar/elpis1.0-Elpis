@@ -63,6 +63,14 @@ const onTableOperate = ({ btnConfig, rowData }) => {
     EvenHandleMap[eventKey]({ btnConfig, rowData });
   }
 };
+
+// 响应组件事件
+const onComponentCommand = (data) => {
+  const { event } = data;
+  if (event === 'loadTableData') {
+    tablePanelRef.value.loadTableData();
+  }
+};
 </script>
 <style lang="less" scoped>
 .schema-view {

@@ -34,6 +34,7 @@ const props = defineProps({
 const { schemaKey, schema } = props;
 const { model } = toRefs(props);
 
+const name = ref('input');
 const dtoValue = ref();
 const placeholder = ref('');
 const validTips = ref(null);
@@ -110,7 +111,7 @@ const onFocus = () => {
   validTips.value = '';
 };
 const onBlur = () => {
-  validate();
+  validateFn();
 };
 
 const getValue = () => {
@@ -118,6 +119,7 @@ const getValue = () => {
 };
 
 defineExpose({
+  name,
   validateFn,
   getValue,
 });

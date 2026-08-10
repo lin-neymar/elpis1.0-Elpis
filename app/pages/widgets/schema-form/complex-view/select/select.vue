@@ -38,6 +38,7 @@ const props = defineProps({
 const { schemaKey, schema } = props;
 const { model } = toRefs(props);
 
+const name = ref('select');
 const dtoValue = ref();
 const validTips = ref(null);
 const initData = () => {
@@ -93,7 +94,7 @@ const validateFn = () => {
 };
 
 const onChange = () => {
-  validate();
+  validateFn();
 };
 
 const getValue = () => {
@@ -101,6 +102,7 @@ const getValue = () => {
 };
 
 defineExpose({
+  name,
   validateFn,
   getValue,
 });
