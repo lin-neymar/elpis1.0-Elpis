@@ -1,5 +1,6 @@
 import createForm from './create-form/create-form.vue';
 import editForm from './edit-form/edit-form.vue';
+import detailPanel from './detail-panel/detail-panel.vue';
 
 const componentConfig = {
   createForm: {
@@ -7,6 +8,9 @@ const componentConfig = {
   },
   editForm: {
     component: editForm,
+  },
+  detailPanel: {
+    component: detailPanel,
   },
 };
 

@@ -95,6 +95,11 @@
                 // comType === 'select' 时生效
                 enumList: [], // 枚举列表
               },
+
+              // 字段在 detailPanel 表单中的相关配置
+              detailPanelOption: {
+                ...eleComponentConfig, // 标准 el-component 配置
+              },
             },
           },
           required: [], // 标记哪些字段是必填项
@@ -145,6 +150,11 @@
             mainKey: '', // 表单主键，用于唯一标识要修改的数据对象
             title: '', // 表单标题
             saveBtnText: '', // 保存按钮文案
+          },
+          // detail-panel 表单相关配置
+          detailPanel: {
+            mainKey: '', // 表单主键，用于唯一标识要修改的数据对象
+            title: '', // 表单标题
           },
 
           // ...支持用户动态扩展
