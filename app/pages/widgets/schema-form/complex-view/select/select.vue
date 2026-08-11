@@ -32,7 +32,7 @@ const ajv = inject('ajv');
 const props = defineProps({
   schemaKey: String,
   schema: Object,
-  model: Object,
+  model: null,
 });
 
 const { schemaKey, schema } = props;

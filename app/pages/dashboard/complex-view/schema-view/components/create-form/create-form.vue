@@ -18,7 +18,6 @@ import { ElNotification } from 'element-plus';
 import SchemaForm from '$widgets/schema-form/schema-form.vue';
 
 const { api, components } = inject('schemaViewData');
-
 const emit = defineEmits(['command']);
 
 const name = ref('createForm');
@@ -28,12 +27,10 @@ const isShow = ref(false);
 const loading = ref(false);
 const title = ref('');
 const saveBtnText = ref('');
-const show = (rowData) => {
+const show = () => {
   const { config } = components.value[name.value];
-
   title.value = config.title;
   saveBtnText.value = config.saveBtnText;
-
   isShow.value = true;
 };
 
@@ -43,6 +40,7 @@ const close = () => {
 };
 
 const save = async () => {
+  if (loading.value) return; // 防止重复提交
   if (!schemaFormRef.value.validate()) return;
   loading.value = true;
   const res = await $curl({
@@ -72,8 +70,4 @@ defineExpose({
   show,
 });
 </script>
-<style lang="less" scoped>
-.title {
-  color: #6d6c6c;
-}
-</style>
+<style lang="less" scoped></style>

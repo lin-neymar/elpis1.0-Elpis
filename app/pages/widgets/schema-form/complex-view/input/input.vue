@@ -28,7 +28,7 @@ const ajv = inject('ajv');
 const props = defineProps({
   schemaKey: String,
   schema: Object,
-  model: Object,
+  model: String,
 });
 
 const { schemaKey, schema } = props;
@@ -84,8 +84,8 @@ const validateFn = () => {
   // ajv 校验schema
   if (dtoValue.value) {
     const validate = ajv.compile(schema);
-    const vaild = validate(dtoValue.value);
-    if (!vaild && validate.errors && validate.errors[0]) {
+    const valid = validate(dtoValue.value);
+    if (!valid && validate.errors && validate.errors[0]) {
       const { keyword, params } = validate.errors[0];
       if (keyword === 'type') {
         validTips.value = `类型必须为${type}`;

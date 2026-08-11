@@ -78,5 +78,8 @@ const onComponentCommand = (data) => {
   flex-direction: column;
   height: 100%;
   width: 100%;
+  :deep(.title) {
+    color: #6d6c6c;
+  }
 }
 </style>

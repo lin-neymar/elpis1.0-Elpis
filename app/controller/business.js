@@ -84,5 +84,45 @@ module.exports = (app) => {
         inventory,
       });
     }
+
+    async updateProduct(ctx) {
+      await sleep(500);
+      const { product_id: productId, product_name: productName, price, inventory } = ctx.request.body;
+      this.success(ctx, {
+        product_id: productId,
+        product_name: productName,
+        price,
+        inventory,
+      });
+    }
+    async getProduct(ctx) {
+      const { product_id: productId } = ctx.request.query;
+      await sleep(500);
+      const productList = [
+        {
+          product_id: '1',
+          product_name: `${ctx.projKey}测试1`,
+          price: 39.9,
+          inventory: 100,
+          create_time: '2026-07-21 11:35:44',
+        },
+        {
+          product_id: '2',
+          product_name: `${ctx.projKey}测试2`,
+          price: 199,
+          inventory: 200,
+          create_time: '2026-07-20 11:38:44',
+        },
+        {
+          product_id: '3',
+          product_name: `${ctx.projKey}测试3`,
+          price: 398,
+          inventory: 300,
+          create_time: '2026-07-20 12:35:44',
+        },
+      ];
+      const productItem = productList.find((item) => item.product_id === productId);
+      this.success(ctx, productItem);
+    }
   };
 };

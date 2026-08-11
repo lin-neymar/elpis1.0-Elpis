@@ -19,9 +19,15 @@ module.exports = {
                 width: 300,
                 'show-overflow-tooltip': true,
               },
+              editFormOption: {
+                comType: 'input',
+                disabled: true,
+              },
             },
             product_name: {
               type: 'string',
+              maxLength: 10,
+              minLength: 2,
               label: '商品名称',
               tableOption: {
                 width: 200,
@@ -32,10 +38,16 @@ module.exports = {
               },
               createFormOption: {
                 comType: 'input',
+                default: '测试',
+              },
+              editFormOption: {
+                comType: 'input',
               },
             },
             price: {
               type: 'number',
+              maximum: 1000,
+              minimum: 100,
               label: '价格',
               tableOption: {
                 width: 200,
@@ -64,6 +76,9 @@ module.exports = {
               createFormOption: {
                 comType: 'inputNumber',
               },
+              editFormOption: {
+                comType: 'inputNumber',
+              },
             },
             inventory: {
               type: 'number',
@@ -75,6 +90,23 @@ module.exports = {
                 comType: 'input',
               },
               createFormOption: {
+                comType: 'select',
+                enumList: [
+                  {
+                    label: '100',
+                    value: 100,
+                  },
+                  {
+                    label: '200',
+                    value: 200,
+                  },
+                  {
+                    label: '300',
+                    value: 300,
+                  },
+                ],
+              },
+              editFormOption: {
                 comType: 'select',
                 enumList: [
                   {
@@ -119,6 +151,9 @@ module.exports = {
             {
               label: '修改',
               eventKey: 'showComponent',
+              eventOption: {
+                comName: 'editForm',
+              },
               type: 'warning',
             },
             {
@@ -137,6 +172,11 @@ module.exports = {
           createForm: {
             title: '新增商品',
             saveBtnText: '新增商品',
+          },
+          editForm: {
+            mainKey: 'product_id',
+            title: '修改商品',
+            saveBtnText: '修改商品',
           },
         },
       },
