@@ -5,7 +5,7 @@
       <template v-for="(schemaItem, key) in schema.properties">
         <!-- prop 和 label 是必填的，其他配置可选 -->
         <el-table-column
-          v-if="schemaItem.option.visiable !== 'false'"
+          v-if="schemaItem.option.visible !== 'false'"
           :key="key"
           :prop="key"
           :label="schemaItem.label"
@@ -54,7 +54,7 @@ const props = defineProps({
   //            label: '', // 字段的中文名
   //            option: {
   //               ...elTableColumnConfig, // 标准 el-table-column 配置
-  //               visiable: true, // 默认为 true (false 或 不配置时，表示不在表单中显示)
+  //               visible: true, // 默认为 true (false 或 不配置时，表示不在表单中显示)
   //            },
   //         },
   //     },
