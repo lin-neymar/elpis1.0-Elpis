@@ -62,12 +62,18 @@ module.exports = {
     controllerLoader(app);
     console.log(`-- [start] load controller done --`);
 
-    // 注册全局中间件（默认用户引入的middleware.js是在app/middleware.js）
+    // 注册Elpis全局中间件
+    const elpisMiddlewarePath = path.resolve(__dirname, `..${sep}app${sep}middleware.js`);
+    const elpisMiddleware = require(elpisMiddlewarePath);
+    elpisMiddleware(app);
+    console.log(`-- [start] load elpisMiddleware done --`);
+
+    // 注册业务全局中间件
     try {
       require(`${app.businessPath}${sep}middleware.js`)(app);
-      console.log(`-- [start] load appMiddleware done --`);
+      console.log(`-- [start] load businessMiddleware done --`);
     } catch (e) {
-      console.log('[exception] there is no global middle file');
+      console.log('[exception] there is no global business middleware file');
     }
 
     // 注册路由 先经过中间件，最后才是路由分发

@@ -8,7 +8,7 @@ const pageEntries = {};
 const HtmlWebpackPluginList = [];
 // 约定好：所有的入口文件都会放在pages文件夹
 // 获取 app/pages 目录下所有入口文件 （entry.xx.js）
-const entryList = path.resolve(process.cwd(), './app/pages/**/entry.*.js');
+const entryList = path.resolve(__dirname, '../../pages/**/entry.*.js');
 glob.sync(entryList).forEach((file) => {
   const entryName = path.basename(file, '.js');
   // 构造 entry
@@ -16,10 +16,10 @@ glob.sync(entryList).forEach((file) => {
   // 构造最终渲染的页面文件
   HtmlWebpackPluginList.push(
     new HtmlWebpackPlugin({
-      // 产物（最终模板）输出路径
+      // 产物（最终模板）输出路径 ===>需要输出到调用方的指定目录下
       filename: path.resolve(process.cwd(), './app/public/dist/', `${entryName}.tpl`),
-      // 指定要使用的模板文件
-      template: path.resolve(process.cwd(), './app/view/entry.tpl'),
+      // 指定要使用的模板文件(使用自己elpis的模板)
+      template: path.resolve(__dirname, '../../view/entry.tpl'),
       // 要注入的代码块
       chunks: [entryName],
     }),
@@ -44,23 +44,28 @@ module.exports = {
       {
         test: /\.vue$/,
         use: {
-          loader: 'vue-loader',
+          loader: require.resolve('vue-loader'),
         },
       },
       {
         test: /\.js$/,
         include: [
           // 只对业务代码进行 babel, 加快 webpack 打包速度
-          path.resolve(process.cwd(), './app/pages'),
+          path.resolve(__dirname, '../../pages'),
         ],
         use: {
-          loader: 'babel-loader',
+          /*
+          先用 Node 的模块解析规则找到 babel-loader 的真实安装路径
+          再把这个“绝对路径”传给 webpack
+          这样 webpack 不再依赖“当前命令执行目录”的 node_modules 解析结果
+          */
+          loader: require.resolve('babel-loader'),
         },
       },
       {
         test: /\.(png|jpe?g|gif)(\?.+)?$/,
         use: {
-          loader: 'url-loader',
+          loader: require.resolve('url-loader'),
           options: {
             limit: 300,
             esModule: false, // 关闭 esModule 转换
@@ -69,16 +74,16 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
+        use: [require.resolve('style-loader'), require.resolve('css-loader')],
       },
       {
         test: /\.less$/,
         // loader 从右到左执行
-        use: ['style-loader', 'css-loader', 'less-loader'],
+        use: [require.resolve('style-loader'), require.resolve('css-loader'), require.resolve('less-loader')],
       },
       {
         test: /\.(eot|svg|ttf|woff|woff2)(\?\S*)?$/,
-        use: 'file-loader',
+        use: require.resolve('file-loader'),
       },
     ],
   },
@@ -88,10 +93,10 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.vue', '.less', '.css'], // 扩展名
     alias: {
-      $pages: path.resolve(process.cwd(), './app/pages'), // 页面路径别名
-      $common: path.resolve(process.cwd(), './app/pages/common'),
-      $widgets: path.resolve(process.cwd(), './app/pages/widgets'),
-      $store: path.resolve(process.cwd(), './app/pages/store'),
+      $pages: path.resolve(__dirname, '../../pages'), // 页面路径别名
+      $common: path.resolve(__dirname, '../../pages/common'),
+      $widgets: path.resolve(__dirname, '../../pages/widgets'),
+      $store: path.resolve(__dirname, '../../pages/store'),
     },
   },
   // 5.配置 webpack 插件（整包级别的增强能力）

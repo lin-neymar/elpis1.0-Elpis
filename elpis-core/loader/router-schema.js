@@ -20,13 +20,19 @@ const { sep } = path;
 */
 
 module.exports = (app) => {
-  // 读取 app/router-schema/**/**.js下所有的文件
-  const routerSchemaPath = path.resolve(app.businessPath, `.${sep}router-schema`);
-  const fileList = glob.sync(path.resolve(routerSchemaPath, `.${sep}**${sep}**.js`));
+  // 读取 Elpis/app/router-schema/**/**.js下所有的文件
+  const elpisRouterSchemaPath = path.resolve(__dirname, `..${sep}..${sep}app${sep}router-schema`);
+  const elpisFileList = glob.sync(path.resolve(elpisRouterSchemaPath, `.${sep}**${sep}**.js`));
+
+  // 读取 业务根目录/app/router-schema/**/**.js下所有的文件
+  const businessRouterSchemaPath = path.resolve(app.businessPath, `.${sep}router-schema`);
+  const businessFileList = glob.sync(path.resolve(businessRouterSchemaPath, `.${sep}**${sep}**.js`));
 
   // 注册所有 routerSchema，使得可以 'app.routerSchema' 这样访问
   let routerSchema = {};
-  fileList.forEach((file) => {
+
+  // 下面这种方式也行，像middleware一样抽取一个方法出来并各自循环执行也行
+  [...elpisFileList, ...businessFileList].forEach((file) => {
     routerSchema = {
       ...routerSchema,
       ...require(path.resolve(file)),

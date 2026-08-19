@@ -18,13 +18,17 @@ service loader
 
 */
 module.exports = (app) => {
-  // 读取 app/service/**/**.js下所有的文件
-  const servicePath = path.resolve(app.businessPath, `.${sep}service`);
-  const fileList = glob.sync(path.resolve(servicePath, `.${sep}**${sep}**.js`));
+  // 读取 Elpisapp/service/**/**.js下所有的文件
+  const ElpisServicePath = path.resolve(__dirname, `..${sep}..${sep}app${sep}service`);
+  const ElpisServiceFileList = glob.sync(path.resolve(ElpisServicePath, `.${sep}**${sep}**.js`));
+
+  // 读取 业务根目录/app/service/**/**.js下所有的文件
+  const businessServicePath = path.resolve(app.businessPath, `.${sep}service`);
+  const businessServiceFileList = glob.sync(path.resolve(businessServicePath, `.${sep}**${sep}**.js`));
 
   // 遍历所有文件目录，把内容加载到 app.service 下
   const service = {};
-  fileList.forEach((file) => {
+  [...ElpisServiceFileList, ...businessServiceFileList].forEach((file) => {
     // 提取文件名称
     let name = path.resolve(file);
 
