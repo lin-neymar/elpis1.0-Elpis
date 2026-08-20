@@ -13,9 +13,9 @@
 </template>
 <script setup>
 import { inject, ref } from 'vue';
-import $curl from '$common/curl.js';
+import $curl from '$elpisCommon/curl.js';
 import { ElNotification } from 'element-plus';
-import SchemaForm from '$widgets/schema-form/schema-form.vue';
+import SchemaForm from '$elpisWidgets/schema-form/schema-form.vue';
 
 const { api, components } = inject('schemaViewData');
 const emit = defineEmits(['command']);
