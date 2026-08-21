@@ -120,6 +120,7 @@ module.exports = merge.smart(
     // 4.配置模块解析的具体行为（定义 webpack 在打包时，如何找到并解析具体模块的路径）
     resolve: {
       extensions: ['.js', '.vue', '.less', '.css'], // 扩展名
+      // 页面路径别名
       alias: {
         // 页面路径别名
         vue: require.resolve('vue'), // vue
@@ -139,6 +140,33 @@ module.exports = merge.smart(
         $elpisSchemaSearchBar: path.resolve(__dirname, '../../pages/widgets/schema-search-bar/schema-search-bar.vue'),
         $elpisStore: path.resolve(__dirname, '../../pages/store'),
         $elpisBoot: path.resolve(__dirname, '../../pages/boot.js'),
+        // 业务方 dashboard 路由扩展（可选能力）：按序尝试解析业务方 app/pages/dashboard/router.js，
+        // 文件不存在时自动降级到框架内置空模块，保证构建不因业务方未配置而失败
+        $businessDashboardRouterConfig: [
+          path.resolve(process.cwd(), './app/pages/dashboard/router.js'),
+          path.resolve(__dirname, '../libs/blink.js'),
+        ],
+        // schema-view component 扩展配置
+        // 业务方 dashboard 组件扩展（可选能力）：按序尝试解析业务方 app/pages/dashboard/complex-view/schema-view/components/component-config.js，
+        // 文件不存在时自动降级到框架内置空模块，保证构建不因业务方未配置而失败
+        $businessComponentConfig: [
+          path.resolve(process.cwd(), './app/pages/dashboard/complex-view/schema-view/components/component-config.js'),
+          path.resolve(__dirname, '../libs/blink.js'),
+        ],
+        // schema-form form-item 扩展配置
+        // 业务方 schema-form form-item 扩展配置（可选能力）：按序尝试解析业务方 app/pages/widgets/schema-form/form-item-config.js，
+        // 文件不存在时自动降级到框架内置空模块，保证构建不因业务方未配置而失败
+        $businessFormItemConfig: [
+          path.resolve(process.cwd(), './app/pages/widgets/schema-form/form-item-config.js'),
+          path.resolve(__dirname, '../libs/blink.js'),
+        ],
+        // schema-search-bar search-item 扩展配置
+        // 业务方 schema-search-bar search-item 扩展配置（可选能力）：按序尝试解析业务方 app/pages/widgets/schema-search-bar/search-item-config.js，
+        // 文件不存在时自动降级到框架内置空模块，保证构建不因业务方未配置而失败
+        $businessSearchItemConfig: [
+          path.resolve(process.cwd(), './app/pages/widgets/schema-search-bar/search-item-config.js'),
+          path.resolve(__dirname, '../libs/blink.js'),
+        ],
       },
     },
     // 5.配置 webpack 插件（整包级别的增强能力）

@@ -1,5 +1,6 @@
 import boot from '$elpisPages/boot.js';
 import dashBoard from './dashboard.vue';
+import businessDashboardRouterConfig from '$businessDashboardRouterConfig';
 
 const routes = [];
 
@@ -12,11 +13,23 @@ routes.push({
   path: '/view/dashboard/schema',
   component: () => import('./complex-view/schema-view/schema-view.vue'),
 });
-// custom 自定义路由
-routes.push({
-  path: '/view/dashboard/todo',
-  component: () => import('./todo/todo.vue'),
-});
+
+// 侧边栏路由
+const siderRoutes = [
+  {
+    path: 'iframe',
+    component: () => import('./complex-view/iframe-view/iframe-view.vue'),
+  },
+  {
+    path: 'schema',
+    component: () => import('./complex-view/schema-view/schema-view.vue'),
+  },
+];
+
+// 业务拓展路由
+if (typeof businessDashboardRouterConfig === 'function') {
+  businessDashboardRouterConfig({ routes, siderRoutes });
+}
 
 // 侧边栏菜单路由
 // children 必须用相对路径：'todo' → 实际 URL 为 /view/dashboard/sider/todo
@@ -25,21 +38,7 @@ routes.push({
 routes.push({
   path: '/view/dashboard/sider',
   component: () => import('./complex-view/sider-view/sider-view.vue'),
-  children: [
-    {
-      path: 'iframe',
-      component: () => import('./complex-view/iframe-view/iframe-view.vue'),
-    },
-    {
-      path: 'schema',
-      component: () => import('./complex-view/schema-view/schema-view.vue'),
-    },
-    // custom 自定义路由
-    {
-      path: 'todo',
-      component: () => import('./todo/todo.vue'),
-    },
-  ],
+  children: siderRoutes,
 });
 
 // 侧边栏菜单兜底策略
