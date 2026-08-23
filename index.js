@@ -25,6 +25,16 @@ const FEBuildProd = require('../Elpis/app/webpack/prod');
 
 module.exports = {
   /*
+   * 服务端基础,让外部使用者能够使用到对应的base
+   */
+  Controller: {
+    Base: require('./app/controller/base'),
+  },
+  Service: {
+    Base: require('./app/service/base'),
+  },
+
+  /*
    * 编译构建前端工程
    * @param env 环境变量 local/production
    */
