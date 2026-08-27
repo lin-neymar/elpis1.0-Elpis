@@ -19,9 +19,45 @@
 
 // 更换启动方式，引入elpis-core
 const ElpisCore = require('./elpis-core');
+// 引入前端工程化构建方法
+const FEBuildDev = require('../Elpis/app/webpack/dev');
+const FEBuildProd = require('../Elpis/app/webpack/prod');
+
+module.exports = {
+  /*
+   * 服务端基础,让外部使用者能够使用到对应的base
+   */
+  Controller: {
+    Base: require('./app/controller/base'),
+  },
+  Service: {
+    Base: require('./app/service/base'),
+  },
+
+  /*
+   * 编译构建前端工程
+   * @param env 环境变量 local/production
+   */
+  frontendBuild(env) {
+    if (env === 'local') {
+      FEBuildDev();
+    } else if (env === 'production') {
+      FEBuildProd();
+    }
+  },
+
+  /*
+   * 启动elpis
+   * @param {Object} options - 启动参数，项目配置，透传到elpis-core
+   */
+  serverStart(options = {}) {
+    const app = ElpisCore.start(options);
+    return app;
+  },
+};
 
 // 启动项目
-ElpisCore.start({
-  name: 'Elpis',
-  homePage: '/view/dashboard',
-});
+// ElpisCore.start({
+//   name: 'Elpis',
+//   homePage: '/view/dashboard',
+// });

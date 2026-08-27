@@ -1,6 +1,6 @@
-const KoaRouter = require("koa-router");
-const glob = require("glob");
-const path = require("path");
+const KoaRouter = require('koa-router');
+const glob = require('glob');
+const path = require('path');
 const { sep } = path;
 /*
  * router loader
@@ -10,26 +10,29 @@ const { sep } = path;
  */
 
 module.exports = (app) => {
-  // 找到路由文件路径
-  const routerPath = path.resolve(app.businessPath, `.${sep}router`);
-
   // 实例化 KoaRouter
   const router = new KoaRouter();
 
-  // 注册所有路由
-  const fileList = glob.sync(path.resolve(routerPath, `.${sep}**${sep}**.js`));
-  // 相当于
-  // module.exports = (app, router) => {
-  //   router.get('xxxx/xx/xx/xx', xxxController);
-  // };
-  fileList.forEach((file) => {
+  // 找到 Elpis 路由文件路径
+  const elpisRouterPath = path.resolve(__dirname, `..${sep}..${sep}app${sep}router`);
+  // 注册所有 Elpis 路由
+  const elpisFileList = glob.sync(path.resolve(elpisRouterPath, `.${sep}**${sep}**.js`));
+  elpisFileList.forEach((file) => {
+    require(path.resolve(file))(app, router);
+  });
+
+  // 找到 业务 路由文件路径
+  const businessRouterPath = path.resolve(app.businessPath, `.${sep}router`);
+  // 注册所有 业务 路由
+  const businessFileList = glob.sync(path.resolve(businessRouterPath, `.${sep}**${sep}**.js`));
+  businessFileList.forEach((file) => {
     require(path.resolve(file))(app, router);
   });
 
   // 路由兜底 (健壮性)
-  router.get("*", async (ctx, next) => {
+  router.get('*', async (ctx, next) => {
     ctx.status = 302; // 临时重定向
-    ctx.redirect(`${app?.options?.homePage ?? "/"}`);
+    ctx.redirect(`${app?.options?.homePage ?? '/'}`);
   });
 
   // 路由注册到 app 上

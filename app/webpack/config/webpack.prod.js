@@ -44,15 +44,18 @@ const webpackConfig = merge.smart(baseConfig, {
         // 在base中是将style-loader 注入 <style>，适合 dev，不适合生产缓存，所以这里使用 MiniCssExtractPlugin.loader 提取 css 文件
         // CSS 单独成文件，可 CDN 缓存，不塞 JS 里
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'happypack/loader?id=css'],
+        use: [MiniCssExtractPlugin.loader, `${require.resolve('happypack/loader')}?id=css`],
       },
       {
         test: /\.js$/,
         include: [
           // 只对业务代码进行 babel, 加快 webpack 打包速度
+          // 1.处理 elpis/app/pages 下的 JS 文件
+          path.resolve(__dirname, '../../pages'),
+          // 2.处理 business/app/pages 下的 JS 文件
           path.resolve(process.cwd(), './app/pages'),
         ],
-        use: ['happypack/loader?id=js'],
+        use: [`${require.resolve('happypack/loader')}?id=js`],
       },
     ],
   },
@@ -81,9 +84,9 @@ const webpackConfig = merge.smart(baseConfig, {
       ...happypackCommonConfig,
       id: 'js',
       loaders: [
-        `babel-loader?${JSON.stringify({
-          presets: ['@babel/preset-env'],
-          plugins: ['@babel/plugin-transform-runtime'],
+        `${require.resolve('babel-loader')}?${JSON.stringify({
+          presets: [require.resolve('@babel/preset-env')],
+          plugins: [require.resolve('@babel/plugin-transform-runtime')],
         })}`,
       ],
     }),
@@ -93,7 +96,7 @@ const webpackConfig = merge.smart(baseConfig, {
       id: 'css',
       loaders: [
         {
-          path: 'css-loader',
+          path: require.resolve('css-loader'),
           options: {
             importLoaders: 1,
           },

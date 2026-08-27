@@ -16,13 +16,17 @@ extend loader
 
 */
 module.exports = (app) => {
-  // 读取 app/extend/**.js下所有的文件
-  const extendPath = path.resolve(app.businessPath, `.${sep}extend`);
-  const fileList = glob.sync(path.resolve(extendPath, `.${sep}**${sep}**.js`));
+  // 读取 Elpis/app/extend/**.js下所有的文件
+  const elpisExtendPath = path.resolve(__dirname, `..${sep}..${sep}app${sep}extend`);
+  const elpisFileList = glob.sync(path.resolve(elpisExtendPath, `.${sep}**${sep}**.js`));
+
+  // 读取 业务/app/extend/**.js下所有的文件
+  const businessExtendPath = path.resolve(app.businessPath, `.${sep}extend`);
+  const businessFileList = glob.sync(path.resolve(businessExtendPath, `.${sep}**${sep}**.js`));
 
   // 遍历所有文件目录，把内容加载到 app.extend 下
   const extend = {};
-  fileList.forEach((file) => {
+  [...elpisFileList, ...businessFileList].forEach((file) => {
     // 提取文件名称
     let name = path.resolve(file);
 

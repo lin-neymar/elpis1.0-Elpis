@@ -18,13 +18,17 @@ controller loader
 
 */
 module.exports = (app) => {
-  // 读取 app/controller/**/**.js下所有的文件
-  const controllerPath = path.resolve(app.businessPath, `.${sep}controller`);
-  const fileList = glob.sync(path.resolve(controllerPath, `.${sep}**${sep}**.js`));
+  // 读取 Elpis/app/controller/**/**.js下所有的文件
+  const ElpisControllerPath = path.resolve(__dirname, `..${sep}..${sep}app${sep}controller`);
+  const ElpisControllerFileList = glob.sync(path.resolve(ElpisControllerPath, `.${sep}**${sep}**.js`));
+
+  // 读取 业务根目录/app/controller/**/**.js下所有的文件
+  const businessControllerPath = path.resolve(app.businessPath, `.${sep}controller`);
+  const businessControllerFileList = glob.sync(path.resolve(businessControllerPath, `.${sep}**${sep}**.js`));
 
   // 遍历所有文件目录，把内容加载到 app.controller 下
   const controller = {};
-  fileList.forEach((file) => {
+  [...ElpisControllerFileList, ...businessControllerFileList].forEach((file) => {
     // 提取文件名称
     let name = path.resolve(file);
 

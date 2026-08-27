@@ -9,7 +9,7 @@ import 'element-plus/theme-chalk/dark/css-vars.css';
 import './asserts/custom.css';
 
 // 引入pinia
-import pinia from '$store';
+import pinia from '$elpisStore';
 
 // 引入 vue-router
 import { createRouter, createWebHistory } from 'vue-router';
