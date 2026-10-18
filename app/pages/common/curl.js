@@ -58,6 +58,13 @@ const curl = ({
           ElMessage.error('缺少项目关键参数');
         } else if (code === 50000) {
           ElMessage.error(message);
+          // 登录态失效：跳转登录页并记录回跳地址
+          // 登录页路径由业务 serverStart({ loginPage }) 注入 window.options，未配置时用默认值
+          const loginPage = window.options?.loginPage || '/view/auth/login';
+          if (window.location.pathname !== loginPage) {
+            const callback = encodeURIComponent(`${window.location.pathname}${window.location.search}`);
+            window.location = `http://${window.location.host}${loginPage}?callback=${callback}`;
+          }
         } else {
           ElMessage.error(errorMessage); //兜底
         }
