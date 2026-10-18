@@ -167,6 +167,12 @@ module.exports = merge.smart(
           path.resolve(process.cwd(), './app/pages/widgets/schema-search-bar/search-item-config.js'),
           path.resolve(__dirname, '../libs/blink.js'),
         ],
+
+        // header-container 扩展配置
+        $businessHeaderConfig: [
+          path.resolve(process.cwd(), './app/pages/widgets/header-container/header-container-config.js'),
+          path.resolve(__dirname, '../libs/blink.js'),
+        ],
       },
     },
     // 5.配置 webpack 插件（整包级别的增强能力）
