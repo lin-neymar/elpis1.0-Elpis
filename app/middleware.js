@@ -8,6 +8,7 @@ app/middleware.js 是 项目级「全局中间件注册入口」：在框架启�
 module.exports = (app) => {
   // 配置静态根目录
   const koaStatic = require('koa-static');
+  app.use(koaStatic(path.resolve(__dirname, './public')));
   app.use(koaStatic(path.resolve(process.cwd(), './app/public')));
 
   // 模板渲染引擎(模板引擎就是基于模板配合数据构造出字符串输出的一个组件)

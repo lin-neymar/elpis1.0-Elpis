@@ -29,7 +29,7 @@ module.exports = (app) => {
       ...require(path.resolve(businessConfigPath, `.${sep}config.default.js`)),
     };
   } catch (err) {
-    console.error('[exception] there is no default.config file');
+    console.error('[exception]default.config file exception');
   }
 
   // 获取env.config
