@@ -6,6 +6,11 @@ const md5 = require('md5');
 
 module.exports = (app) => {
   return async (ctx, next) => {
+    // 校验白名单
+    if (app.config?.apiSignVerify.whiteList.includes(ctx.path)) {
+      return await next();
+    }
+
     // 只对 API 请求做签名校验
     if (ctx.path.indexOf('/api') < 0) {
       return await next();
