@@ -29,7 +29,7 @@
 </template>
 
 <script setup>
-import BussinessHeaderConfig from '$bussinessHeaderConfig';
+import BussinessHeaderConfig from '$businessHeaderConfig';
 
 defineProps({
   title: String,
