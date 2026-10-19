@@ -77,6 +77,13 @@ defineExpose({
     }
     .item-value {
       color: #d2dae4;
+      display: block;
+      width: 250px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      word-break: break-all;
+      overflow-wrap: break-word;
     }
   }
 }
