@@ -4,7 +4,7 @@
     <el-form-item v-for="(schemaItem, key) in schema.properties" :key="key" :label="schemaItem.label">
       <!-- 展示子组件 -->
       <component
-        :ref="searchComList"
+        ref="searchComList"
         :is="SearchItemConfig[schemaItem.option?.comType]?.component"
         :schemaKey="key"
         :schema="schemaItem"
